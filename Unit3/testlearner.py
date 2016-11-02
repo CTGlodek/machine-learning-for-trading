@@ -30,7 +30,7 @@ def run_simulation(learner, prices_all, stock, xData, yData, dates, orders_filen
     #print the error and correlation of predictions. This indicates how effective the KNN learner is
     print "Root Mean Squared Error of Predictions: ", rmse
     print "correlation: ", correlation.iloc[0,1]
-    plot = final_vals.plot(title = "Actual Price Versus Predicted Price")
+    plot = final_vals[['pred_y','actual_y']].plot(title = "Actual Price Versus Predicted Price")
     plot.set_xlabel("Date")
     plot.set_ylabel("Price")
     plt.show()

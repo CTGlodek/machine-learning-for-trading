@@ -1,5 +1,6 @@
 """A set of helper functions for optimizing the performance of a stock portfolio"""
 
+import sys, os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,7 +12,6 @@ from analysis import get_portfolio_value, get_portfolio_stats
 """Find optimal allocations for a stock portfolio, optimizing for Sharpe ratio, given the daily prices for each stock in the portfolio"""
 def find_optimal_allocations(prices):
     guess = 1.0/prices.shape[1]
-    print "GUESS:", guess
     function_guess = [guess] * prices.shape[1]
     bnds = [[0,1] for _ in prices.columns]
     cons = ({ 'type': 'eq', 'fun': lambda function_guess: 1.0 - np.sum(function_guess) })
@@ -66,6 +66,17 @@ def test_run():
     start_date = '2010-01-01'
     end_date = '2010-12-31'
     symbols = ['GOOG', 'AAPL', 'GLD', 'HNZ']
+
+    if (len(sys.argv) > 1):
+        symbols = []
+        for i in range(1, len(sys.argv)):
+            file_path = "data/" + sys.argv[i] + ".csv"
+            # Check if that file exists
+            if not os.path.exists(file_path) or not os.path.isfile(file_path):
+                print "Data for the stock {} does not exist. Please reference stocks in the data folder, or run with no option provided".format(stock)
+                return
+            symbols.append(sys.argv[i])
+
     optimize_portfolio(start_date, end_date, symbols)
 
 if __name__ == "__main__":

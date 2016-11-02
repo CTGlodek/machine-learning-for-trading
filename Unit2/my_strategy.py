@@ -124,7 +124,7 @@ def run():
     prices_all = get_data([stock], dates)
 
     generate_orders_file(prices_all, dates, stock)
-    calculate_portfolio_value("Unit2/orders/orders_bollingerstrategy.csv", prices_all, dates, stock)
+    calculate_portfolio_value("Unit2/orders/orders_mystrategy.csv", prices_all, dates, stock)
 
 
 
